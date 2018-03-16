@@ -111,15 +111,17 @@ def solve_mean_variance(lambdas, means, stds, rhos, fund_specs, tol=1e-8):
         this_dict['Sharpe_ratio0'] = this_dict['expectation0'] / np.sqrt(this_dict['variance0'])
         ret.append(this_dict)
     ret = pd.DataFrame.from_dict(ret)
+    for c in ['expectation', 'variance', 'Sharpe_ratio', 'expectation0', 'variance0', 'Sharpe_ratio0']:
+        ret[c] = ret[c].astype(float)
 
     return ret 
             
 
 if __name__ == "__main__":
-    fund_specs = { 0 : [ (0.15, 0.0), (0.17, 0.01), (0.20, 0.02), (0.23, 0.03), (0.30, 0.05) ], 
-                   1 : [ (0.15, 0.0), (0.18, 0.01), (0.22, 0.02), (0.27, 0.05) ], 
-                   2 : [ (0.15, 0.0), (0.18, 0.01), (0.21, 0.03), (0.27, 0.04), (0.32, 0.05), (0.40, 0.10) ] }
-    means = [0.15, 0.15, 0.20]
+    fund_specs = { 0 : [ (0.15, 0.0), (0.16, 0.01), (0.17, 0.02), (0.19, 0.03), (0.22, 0.05) ], 
+                   1 : [ (0.15, 0.0), (0.165, 0.01), (0.17, 0.02), (0.20, 0.05) ], 
+                   2 : [ (0.15, 0.0), (0.17, 0.01), (0.19, 0.03), (0.21, 0.04), (0.25, 0.05), (0.30, 0.10) ] }
+    means = [0.12, 0.12, 0.20]
     stds = [0.25, 0.27, 0.35]
     rhos = {(0, 1) : 0.1, (0, 2) : 0.1, (1, 2) : 0.1}
     lambdas = np.arange(0, 0.21, 0.01)
